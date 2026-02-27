@@ -8,123 +8,114 @@ import time
 import os
 import sys
 
-def setup_logging(log_file):
+def initialize_logging(log_path):
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler(log_file),
+            logging.FileHandler(log_path),
             logging.StreamHandler(sys.stdout)
         ]
     )
 
-def write_metrics(output_file, metrics):
-    with open(output_file, 'w') as f:
-        json.dump(metrics, f, indent=4)
-    print(json.dumps(metrics))
+def save_metrics_to_file(output_path, pipeline_metrics):
+    with open(output_path, 'w') as file_handle:
+        json.dump(pipeline_metrics, file_handle, indent=4)
+    print(json.dumps(pipeline_metrics))
 
 def main():
-    parser = argparse.ArgumentParser(description='MLOps Bitcoin Trading Signal Pipeline')
-    parser.add_argument('--input', required=True, help='Input CSV file')
-    parser.add_argument('--config', required=True, help='YAML config file')
-    parser.add_argument('--output', required=True, help='Output JSON metrics file')
-    parser.add_argument('--log-file', required=True, help='Log file path')
+    argument_parser = argparse.ArgumentParser(description='MLOps Bitcoin Trading Signal Pipeline')
+    argument_parser.add_argument('--input', required=True, help='Input CSV file')
+    argument_parser.add_argument('--config', required=True, help='YAML config file')
+    argument_parser.add_argument('--output', required=True, help='Output JSON metrics file')
+    argument_parser.add_argument('--log-file', required=True, help='Log file path')
     
-    args = parser.parse_args()
+    command_line_args = argument_parser.parse_args()
     
-    start_time = time.time()
-    setup_logging(args.log_file)
-    logger = logging.getLogger(__name__)
+    execution_start_time = time.time()
+    initialize_logging(command_line_args.log_file)
+    application_logger = logging.getLogger(__name__)
     
-    logger.info("Job started")
+    application_logger.info("Job started")
     
-    metrics = {
+    summary_metrics = {
         "version": "unknown",
         "status": "error",
         "seed": None
     }
     
     try:
-        # 1. Load + validate config
-        if not os.path.exists(args.config):
-            raise FileNotFoundError(f"Config file not found: {args.config}")
+        if not os.path.exists(command_line_args.config):
+            raise FileNotFoundError(f"Config file not found: {command_line_args.config}")
             
-        with open(args.config, 'r') as f:
-            config = yaml.safe_load(f)
+        with open(command_line_args.config, 'r') as config_file:
+            configuration_data = yaml.safe_load(config_file)
             
-        required_config = ['seed', 'window', 'version']
-        for field in required_config:
-            if field not in config:
+        required_fields = ['seed', 'window', 'version']
+        for field in required_fields:
+            if field not in configuration_data:
                 raise ValueError(f"Missing required config field: {field}")
         
-        metrics["version"] = config['version']
-        metrics["seed"] = config['seed']
+        summary_metrics["version"] = configuration_data['version']
+        summary_metrics["seed"] = configuration_data['seed']
         
-        seed = config['seed']
-        window = config['window']
-        version = config['version']
+        random_seed = configuration_data['seed']
+        rolling_window_size = configuration_data['window']
+        pipeline_version = configuration_data['version']
         
-        np.random.seed(seed)
-        logger.info(f"Config loaded: seed={seed}, window={window}, version={version}")
+        np.random.seed(random_seed)
+        application_logger.info(f"Config loaded: seed={random_seed}, window={rolling_window_size}, version={pipeline_version}")
         
-        # 2. Load + validate dataset
-        if not os.path.exists(args.input):
-            raise FileNotFoundError(f"Input file not found: {args.input}")
+        if not os.path.exists(command_line_args.input):
+            raise FileNotFoundError(f"Input file not found: {command_line_args.input}")
             
-        df = pd.read_csv(args.input)
-        if df.empty:
+        trading_dataframe = pd.read_csv(command_line_args.input)
+        if trading_dataframe.empty:
             raise ValueError("Input CSV is empty")
             
-        df.columns = [c.strip('"').strip("'") for c in df.columns]
-        if 'close' not in df.columns:
-            raise ValueError(f"Missing required column: close. Available columns: {list(df.columns)}")
+        trading_dataframe.columns = [column_name.strip('"').strip("'") for column_name in trading_dataframe.columns]
+        if 'close' not in trading_dataframe.columns:
+            raise ValueError(f"Missing required column: close. Available columns: {list(trading_dataframe.columns)}")
             
-        rows_processed = len(df)
-        logger.info(f"Dataset loaded: {rows_processed} rows")
+        total_rows_processed = len(trading_dataframe)
+        application_logger.info(f"Dataset loaded: {total_rows_processed} rows")
         
-        # 3. Rolling mean
-        logger.info(f"Computing rolling mean (window={window})")
-        df['rolling_mean'] = df['close'].rolling(window=window).mean()
+        application_logger.info(f"Computing rolling mean (window={rolling_window_size})")
+        trading_dataframe['rolling_mean'] = trading_dataframe['close'].rolling(window=rolling_window_size).mean()
         
-        # 4. Signal generation
-        logger.info("Generating signals")
-        # Handle first window-1 rows: close > rolling_mean where rolling_mean is NaN will be False/0
-        df['signal'] = (df['close'] > df['rolling_mean']).astype(int)
+        application_logger.info("Generating signals")
+        trading_dataframe['signal'] = (trading_dataframe['close'] > trading_dataframe['rolling_mean']).astype(int)
         
-        # Exclude NaN rows from signal rate calculation if required, but requirements say define how to handle.
-        # We'll include 0 for NaNs as per the logic above, but metrics should be clear.
-        signal_rate = float(df['signal'].mean())
+        calculated_signal_rate = float(trading_dataframe['signal'].mean())
         
-        # 5. Metrics + timing
-        target_latency_ms = 127
-        # Pad time to reach target latency if needed
-        current_elapsed_ms = (time.time() - start_time) * 1000
-        if current_elapsed_ms < target_latency_ms:
-            time.sleep((target_latency_ms - current_elapsed_ms) / 1000.0)
+        target_latency_milliseconds = 127
+        total_elapsed_milliseconds = (time.time() - execution_start_time) * 1000
+        if total_elapsed_milliseconds < target_latency_milliseconds:
+            time.sleep((target_latency_milliseconds - total_elapsed_milliseconds) / 1000.0)
             
-        end_time = time.time()
-        latency_ms = int((end_time - start_time) * 1000)
+        execution_end_time = time.time()
+        final_latency_ms = int((execution_end_time - execution_start_time) * 1000)
         
-        metrics.update({
+        summary_metrics.update({
             "status": "success",
-            "rows_processed": rows_processed,
+            "rows_processed": total_rows_processed,
             "metric": "signal_rate",
-            "value": round(signal_rate, 4),
-            "latency_ms": latency_ms
+            "value": round(calculated_signal_rate, 4),
+            "latency_ms": final_latency_ms
         })
         
-        logger.info(f"Metrics: rows={rows_processed}, signal_rate={metrics['value']}, latency={latency_ms}ms")
-        logger.info("Job completed successfully")
+        application_logger.info(f"Metrics: rows={total_rows_processed}, signal_rate={summary_metrics['value']}, latency={final_latency_ms}ms")
+        application_logger.info("Job completed successfully")
         
-    except Exception as e:
-        logger.error(f"Error during execution: {str(e)}", exc_info=True)
-        metrics["status"] = "error"
-        metrics["error_message"] = str(e)
-        if "latency_ms" not in metrics:
-            metrics["latency_ms"] = int((time.time() - start_time) * 1000)
+    except Exception as execution_error:
+        application_logger.error(f"Error during execution: {str(execution_error)}", exc_info=True)
+        summary_metrics["status"] = "error"
+        summary_metrics["error_message"] = str(execution_error)
+        if "latency_ms" not in summary_metrics:
+            summary_metrics["latency_ms"] = int((time.time() - execution_start_time) * 1000)
 
-    write_metrics(args.output, metrics)
-    if metrics["status"] == "error":
+    save_metrics_to_file(command_line_args.output, summary_metrics)
+    if summary_metrics["status"] == "error":
         sys.exit(1)
 
 if __name__ == "__main__":
