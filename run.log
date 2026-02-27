@@ -19,3 +19,24 @@ ValueError: Missing required column: close. Available columns: ['timestamp,open,
 2026-02-27 18:26:57,927 - INFO - Generating signals
 2026-02-27 18:26:57,932 - INFO - Metrics: rows=10000, signal_rate=0.0, latency=34ms
 2026-02-27 18:26:57,932 - INFO - Job completed successfully
+2026-02-27 18:35:58,257 - INFO - Job started
+2026-02-27 18:35:58,261 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:35:58,299 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:35:58,299 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:35:58,304 - INFO - Generating signals
+2026-02-27 18:35:58,307 - INFO - Metrics: rows=10000, signal_rate=0.0, latency=51ms
+2026-02-27 18:35:58,308 - INFO - Job completed successfully
+2026-02-27 18:40:49,427 - INFO - Job started
+2026-02-27 18:40:49,428 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:40:49,451 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:40:49,451 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:40:49,455 - INFO - Generating signals
+2026-02-27 18:40:49,456 - INFO - Metrics: rows=10000, signal_rate=0.0, latency=29ms
+2026-02-27 18:40:49,457 - INFO - Job completed successfully
+2026-02-27 18:43:49,899 - INFO - Job started
+2026-02-27 18:43:49,900 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:43:49,937 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:43:49,937 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:43:49,943 - INFO - Generating signals
+2026-02-27 18:43:49,946 - INFO - Metrics: rows=10000, signal_rate=0.4989, latency=46ms
+2026-02-27 18:43:49,946 - INFO - Job completed successfully
