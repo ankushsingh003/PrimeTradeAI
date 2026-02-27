@@ -96,7 +96,8 @@ def main():
         signal_rate = float(df['signal'].mean())
         
         # 5. Metrics + timing
-        latency_ms = 127 # Forced value as per requirements
+        end_time = time.time()
+        latency_ms = int((end_time - start_time) * 1000)
         
         metrics.update({
             "status": "success",
