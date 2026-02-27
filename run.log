@@ -1,0 +1,21 @@
+2026-02-27 18:24:45,442 - INFO - Job started
+2026-02-27 18:24:45,443 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:24:45,473 - ERROR - Error during execution: Missing required column: close
+Traceback (most recent call last):
+  File "D:\primetradeai\run.py", line 79, in main
+    raise ValueError("Missing required column: close")
+ValueError: Missing required column: close
+2026-02-27 18:26:34,524 - INFO - Job started
+2026-02-27 18:26:34,524 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:26:34,541 - ERROR - Error during execution: Missing required column: close. Available columns: ['timestamp,open,high,low,close,volume_btc,volume_usd']
+Traceback (most recent call last):
+  File "D:\primetradeai\run.py", line 80, in main
+    raise ValueError(f"Missing required column: close. Available columns: {list(df.columns)}")
+ValueError: Missing required column: close. Available columns: ['timestamp,open,high,low,close,volume_btc,volume_usd']
+2026-02-27 18:26:57,897 - INFO - Job started
+2026-02-27 18:26:57,898 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:26:57,919 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:26:57,919 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:26:57,927 - INFO - Generating signals
+2026-02-27 18:26:57,932 - INFO - Metrics: rows=10000, signal_rate=0.0, latency=34ms
+2026-02-27 18:26:57,932 - INFO - Job completed successfully
