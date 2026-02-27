@@ -40,3 +40,52 @@ ValueError: Missing required column: close. Available columns: ['timestamp,open,
 2026-02-27 18:43:49,943 - INFO - Generating signals
 2026-02-27 18:43:49,946 - INFO - Metrics: rows=10000, signal_rate=0.4989, latency=46ms
 2026-02-27 18:43:49,946 - INFO - Job completed successfully
+2026-02-27 18:52:37,495 - INFO - Job started
+2026-02-27 18:52:37,509 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:52:37,631 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:52:37,631 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:52:37,639 - INFO - Generating signals
+2026-02-27 18:52:37,642 - INFO - Metrics: rows=10000, signal_rate=0.4989, latency=148ms
+2026-02-27 18:52:37,643 - INFO - Job completed successfully
+2026-02-27 18:53:14,087 - INFO - Job started
+2026-02-27 18:53:14,088 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:53:14,104 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:53:14,104 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:53:14,106 - INFO - Generating signals
+2026-02-27 18:53:14,107 - INFO - Metrics: rows=10000, signal_rate=0.4989, latency=20ms
+2026-02-27 18:53:14,108 - INFO - Job completed successfully
+2026-02-27 18:53:19,902 - INFO - Job started
+2026-02-27 18:53:19,903 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:53:19,920 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:53:19,920 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:53:19,923 - INFO - Generating signals
+2026-02-27 18:53:19,924 - INFO - Metrics: rows=10000, signal_rate=0.4989, latency=21ms
+2026-02-27 18:53:19,931 - INFO - Job completed successfully
+2026-02-27 18:53:35,211 - INFO - Job started
+2026-02-27 18:53:35,212 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:53:35,231 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:53:35,231 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:53:35,232 - INFO - Generating signals
+2026-02-27 18:53:35,233 - INFO - Metrics: rows=10000, signal_rate=0.4989, latency=22ms
+2026-02-27 18:53:35,234 - INFO - Job completed successfully
+2026-02-27 18:53:39,434 - INFO - Job started
+2026-02-27 18:53:39,434 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:53:39,449 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:53:39,450 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:53:39,453 - INFO - Generating signals
+2026-02-27 18:53:39,455 - INFO - Metrics: rows=10000, signal_rate=0.4989, latency=21ms
+2026-02-27 18:53:39,455 - INFO - Job completed successfully
+2026-02-27 18:53:43,144 - INFO - Job started
+2026-02-27 18:53:43,145 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:53:43,161 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:53:43,161 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:53:43,164 - INFO - Generating signals
+2026-02-27 18:53:43,165 - INFO - Metrics: rows=10000, signal_rate=0.4989, latency=21ms
+2026-02-27 18:53:43,166 - INFO - Job completed successfully
+2026-02-27 18:53:58,006 - INFO - Job started
+2026-02-27 18:53:58,007 - INFO - Config loaded: seed=42, window=5, version=v1
+2026-02-27 18:53:58,025 - INFO - Dataset loaded: 10000 rows
+2026-02-27 18:53:58,025 - INFO - Computing rolling mean (window=5)
+2026-02-27 18:53:58,027 - INFO - Generating signals
+2026-02-27 18:53:58,028 - INFO - Metrics: rows=10000, signal_rate=0.4989, latency=22ms
+2026-02-27 18:53:58,029 - INFO - Job completed successfully
